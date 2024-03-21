@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PredictionService } from '../services/PredictionService';
 
 @Component({
   selector: 'app-root',
@@ -7,12 +8,32 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'GenEsti';
-  description = 'An AutoAid EstimateAssistant';
+  description = 'Upload an image to estimate the cost';
   predictions: any[] = [];
   loading: boolean = false;
-  imageData: string | ArrayBuffer | null = null;
+  imageData: string | ArrayBuffer | null = 'null'; 
 
+  constructor(private predictionService: PredictionService) {}
   predict() {
+    this.loading = true;
+    if (!this.imageData) {
+      console.error('No image data available.');
+      return;
+    }
+     this.predictionService.predict(this.imageData).subscribe(
+        (response) => {
+          // Handle the response from the prediction service
+          this.predictions = response;
+          this.loading = false;
+        },
+        (error) => {
+          // Handle error if any
+          console.error('Prediction failed:', error);
+          this.loading = false;
+        }
+      );
+  }
+ /* predict() {
     // Simulating a delay for demonstration purposes
     this.loading = true;
     setTimeout(() => {
@@ -25,7 +46,8 @@ export class AppComponent {
       ];
       this.loading = false;
     }, 2000);
-  }
+  } */
+
 
   fileChanged(event: any) {
     var input = event.target;
