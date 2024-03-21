@@ -1,17 +1,11 @@
-WORKDIR /app
- 
-COPY . .
- 
-RUN NODE_OPTIONS=--openssl-legacy-provider
+FROM node:alpine
 
-RUN npm run build-dist
- 
-# stage - #final
+WORKDIR /usr/src/app
 
-FROM nginx:stable
- 
-COPY --from=builder /app/dist/  /usr/share/nginx/html
+COPY . /usr/src/app
 
-COPY nginx.conf /etc/nginx/nginx.conf
- 
-CMD ["nginx", "-g", "daemon off;"]
+RUN npm install -g @angular/cli
+
+RUN npm install
+
+CMD ["ng", "serve", "--host", "0.0.0.0"]
