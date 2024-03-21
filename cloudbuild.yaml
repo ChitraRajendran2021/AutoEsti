@@ -1,0 +1,10 @@
+steps:
+  # Step 1: Build the Angular application
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['install']
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['run', 'build-dist']
+
+  # Step 2: Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/cap-al-wonderers/auto-esti:1.0.0', '.']
