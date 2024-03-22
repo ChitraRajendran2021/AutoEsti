@@ -1,6 +1,6 @@
 <div class="container">
-  <h1>{{ title }}</h1>
-  <h2>{{ description }}</h2>
+  <h2>{{ title }}</h2>
+  <h4>{{ description }}</h4>
 
   <!-- User input fields -->
   <div class="form-group">
@@ -30,18 +30,16 @@
       <input type="text" id="carBrandInput" [(ngModel)]="carBrand" class="input">
   </div>
 
-  <!-- Image upload -->
-  <label for="imageInput" class="upload-btn">Upload Image</label>
-  <input type="file" id="imageInput" accept="image/*" (change)="fileChanged($event)"><br><br>
-  <!-- Display uploaded image if available -->
-  <div *ngIf="isEnale" class="form-group">
-      <img [src]="imageData" alt="Uploaded Image" class="uploaded-image">
-  </div>
-
-  <!-- Button to trigger prediction -->
-  <button *ngIf="isEnale" class="predict-btn" data-toggle="modal" data-target="#predictionsModal" (click)="predict()"
-      [disabled]="!isEnale">Estimate Cost</button>
-
+ <!-- Image upload -->
+ <label for="imageInput" class="predict-btn" style="margin-bottom: 10px;">Upload Image</label>
+ <!-- Button to trigger prediction -->
+ <button *ngIf="isEnale" class="predict-btn esti" data-toggle="modal" data-target="#predictionsModal" (click)="predict()"
+     [disabled]="!isEnale">Estimate Cost</button>
+ <input class="hidden-input" type="file" id="imageInput" accept="image/*" (change)="fileChanged($event)"><br><br>
+ <!-- Display uploaded image if available -->
+ <div *ngIf="isEnale" class="form-group">
+   <img [src]="imageData" alt="Uploaded Image" class="uploaded-image">
+ </div>
 </div>
 
 <!-- Modal -->
@@ -75,7 +73,7 @@
                   </tbody>
               </table>
           </div>
-          <div class="modal-footer">
+          <div *ngIf="isEnaleModel" class="modal-footer">
               <label>Do you want to proceed to insurance</label>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
               <button type="button" class="btn btn-primary" (click)="sendToInsurance()">Yes</button>

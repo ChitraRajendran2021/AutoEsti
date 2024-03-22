@@ -80,6 +80,12 @@ h1 {
     background-color: #218838;
 }
 .container, .container-lg, .container-md, .container-sm, .container-xl {
-    max-width: 50%;
+    max-width: 34%;
+    background-color: rgb(150, 196, 147);
 }
-
+.hidden-input{
+    display:none
+}
+.esti{
+    margin-left: 57px;
+}
