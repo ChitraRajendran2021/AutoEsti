@@ -21,6 +21,11 @@
         </div>
 
         <div class="form-group">
+          <label for="insuraceNumber" class="label">Insurance Number:</label>
+          <input type="number" id="insuraceNumber" [(ngModel)]="number" class="input">
+      </div>
+
+        <div class="form-group">
             <label for="carBrandInput" class="label">Car Brand:</label>
             <input type="text" id="carBrandInput" [(ngModel)]="carBrand" class="input">
         </div>
@@ -52,8 +57,9 @@
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">Category</th>
-              <th scope="col">Confidence</th>
+              <th scope="col">ItemName</th>
+              <th scope="col">LabourCharge</th>
+              <th scope="col">Cost To Replace</th>
             </tr>
           </thead>
           <tbody>
@@ -68,6 +74,7 @@
         </table>
       </div>
       <div class="modal-footer">
+        <label>Do you want to proceed to insurance</label>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
         <button type="button" class="btn btn-primary" (click)="sendToInsurance()">Yes</button>
       </div>

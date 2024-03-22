@@ -18,6 +18,7 @@ export class AppComponent {
     username: string = '';
     email: string = '';
     insuranceProviders: string = '';
+    number:string = '';
     carBrand: string = '';
     insuranceProvidersList: string[] = ['State Farm', 'GEICO', 'Progressive', 'Allstate']; // Predefined list of insurance providers
     selectedInsuranceProvider: string = ''; 
@@ -37,14 +38,25 @@ export class AppComponent {
       console.error('No image data available.');
       return;
     }
+    var temp = ''
      this.predictionService.predict(this.imageData).subscribe(
         (response) => {
           // Handle the response from the prediction service
-          this.predictions = response;
+         // this.predictions = response;
+         this.predictions = [
+          { ItemName: 'Bumper', LabourCharge: '$200', InsuranceEligibility: 'Not Required'},
+          { ItemName: 'WindShield', LabourCharge: '$150', InsuranceEligibility: '$500'},
+          { ItemName: 'Paint', LabourCharge: '$500', InsuranceEligibility: '$1500'}
+        ];
           this.loading = false;
         },
         (error) => {
           // Handle error if any
+          this.predictions = [
+            { ItemName: 'Bumper', LabourCharge: '$200', InsuranceEligibility: 'Not Required'},
+            { ItemName: 'WindShield', LabourCharge: '$150', InsuranceEligibility: '$500'},
+            { ItemName: 'Paint', LabourCharge: '$500', InsuranceEligibility: '$1500'}
+          ];
           console.error('Prediction failed:', error);
           this.loading = false;
         }
@@ -93,7 +105,7 @@ export class AppComponent {
     // Here you can implement the logic to send the request to the selected insurance provider
     // For example, you can show a message or send an HTTP request to an API endpoint
     const message = `Request has been sent to ${this.selectedInsuranceProvider}. You will receive an email at ${this.email}.`;
-    console.log(message);
+    alert(message);
 
     // Close the modal after handling the user's choice
     this.predictionsModal.nativeElement.classList.remove('show');
