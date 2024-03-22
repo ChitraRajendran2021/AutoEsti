@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
 import { PredictionService } from '../services/PredictionService';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -67,23 +67,43 @@ export class AppComponent {
 
 
   fileChanged(event: any) {
-    this.isEnale = true
-    var input = event.target;
+    this.isEnale = true;
+    const input = event.target;
     if (input && input.files && input.files[0]) {
-      var reader = new FileReader();
-
+      const reader = new FileReader();
+  
       reader.onloadstart = () => {
         this.loading = true;
       };
-
+  
       reader.onload = (e) => {
         if (e.target?.result) {
-          this.imageData = e.target.result;
+          // Convert the image to base64 format
+          this.imageData = e.target.result.toString();
         }
         this.loading = false; // Hide loading symbol
       };
-
+  
       reader.readAsDataURL(input.files[0]);
+    }
+  }
+  @ViewChild('predictionsModal') predictionsModal!: ElementRef;
+
+  sendToInsurance() {
+    // Here you can implement the logic to send the request to the selected insurance provider
+    // For example, you can show a message or send an HTTP request to an API endpoint
+    const message = `Request has been sent to ${this.selectedInsuranceProvider}. You will receive an email at ${this.email}.`;
+    console.log(message);
+
+    // Close the modal after handling the user's choice
+    this.predictionsModal.nativeElement.classList.remove('show');
+    this.predictionsModal.nativeElement.setAttribute('aria-modal', 'false');
+    this.predictionsModal.nativeElement.style.display = 'none';
+    document.body.classList.remove('modal-open');
+    document.body.style.paddingRight = '0px';
+    const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
+    if (modalBackdrop) {
+      modalBackdrop.remove();
     }
   }
 }
