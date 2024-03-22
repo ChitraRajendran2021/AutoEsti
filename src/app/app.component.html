@@ -1,83 +1,85 @@
-    <div class="container">
-        <h1>{{ title }}</h1>
-        <h2>{{ description }}</h2>
+<div class="container">
+  <h1>{{ title }}</h1>
+  <h2>{{ description }}</h2>
 
-        <!-- User input fields -->
-        <div class="form-group">
-            <label for="usernameInput" class="label">Username:</label>
-            <input type="text" id="usernameInput" [(ngModel)]="username" class="input">
-        </div>
+  <!-- User input fields -->
+  <div class="form-group">
+      <label for="usernameInput" class="label">Username:</label>
+      <input type="text" id="usernameInput" [(ngModel)]="username" class="input">
+  </div>
 
-        <div class="form-group">
-            <label for="emailInput" class="label">Email:</label>
-            <input type="email" id="emailInput" [(ngModel)]="email" class="input">
-        </div>
+  <div class="form-group">
+      <label for="emailInput" class="label">Email:</label>
+      <input type="email" id="emailInput" [(ngModel)]="email" class="input">
+  </div>
 
-        <div class="form-group">
-            <label for="insuranceProvidersInput" class="label">Insurance Provider:</label>
-            <select id="insuranceProvidersInput" [(ngModel)]="selectedInsuranceProvider" class="input">
-                <option *ngFor="let provider of insuranceProvidersList" [value]="provider">{{ provider }}</option>
-            </select>
-        </div>
+  <div class="form-group">
+      <label for="insuranceProvidersInput" class="label">Insurance Provider:</label>
+      <select id="insuranceProvidersInput" [(ngModel)]="selectedInsuranceProvider" class="input">
+          <option *ngFor="let provider of insuranceProvidersList" [value]="provider">{{ provider }}</option>
+      </select>
+  </div>
 
-        <div class="form-group">
-          <label for="insuraceNumber" class="label">Insurance Number:</label>
-          <input type="number" id="insuraceNumber" [(ngModel)]="number" class="input">
-      </div>
+  <div class="form-group">
+      <label for="insuraceNumber" class="label">Insurance Number:</label>
+      <input type="number" id="insuraceNumber" [(ngModel)]="number" class="input">
+  </div>
 
-        <div class="form-group">
-            <label for="carBrandInput" class="label">Car Brand:</label>
-            <input type="text" id="carBrandInput" [(ngModel)]="carBrand" class="input">
-        </div>
+  <div class="form-group">
+      <label for="carBrandInput" class="label">Car Brand:</label>
+      <input type="text" id="carBrandInput" [(ngModel)]="carBrand" class="input">
+  </div>
 
-        <!-- Image upload -->
-        <label for="imageInput" class="upload-btn">Upload Image</label>
-        <input type="file" id="imageInput" accept="image/*" (change)="fileChanged($event)"><br><br>
-        <!-- Display uploaded image if available -->
-        <div *ngIf="isEnale" class="form-group">
-            <img [src]="imageData" alt="Uploaded Image" class="uploaded-image">
-        </div>
+  <!-- Image upload -->
+  <label for="imageInput" class="upload-btn">Upload Image</label>
+  <input type="file" id="imageInput" accept="image/*" (change)="fileChanged($event)"><br><br>
+  <!-- Display uploaded image if available -->
+  <div *ngIf="isEnale" class="form-group">
+      <img [src]="imageData" alt="Uploaded Image" class="uploaded-image">
+  </div>
 
-        <!-- Button to trigger prediction -->
-        <button *ngIf="isEnale" class="predict-btn" data-toggle="modal" data-target="#predictionsModal" (click)="predict()" [disabled]="!isEnale">Estimate Cost</button>
+  <!-- Button to trigger prediction -->
+  <button *ngIf="isEnale" class="predict-btn" data-toggle="modal" data-target="#predictionsModal" (click)="predict()"
+      [disabled]="!isEnale">Estimate Cost</button>
 
-    </div>
+</div>
 
 <!-- Modal -->
-<div class="modal fade" #predictionsModal id="predictionsModal" tabindex="-1" role="dialog" aria-labelledby="predictionsModalLabel" aria-hidden="true">
+<div class="modal fade" #predictionsModal id="predictionsModal" tabindex="-1" role="dialog"
+  aria-labelledby="predictionsModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="predictionsModalLabel">Predictions</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="predictionsModalLabel">Predictions</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th scope="col">ItemName</th>
+                          <th scope="col">LabourCharge</th>
+                          <th scope="col">Cost To Replace</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <!-- Loading spinner -->
+                      <div id="loading" *ngIf="loading">Loading...</div>
+                      <tr *ngFor="let prediction of predictions">
+                          <td>{{ prediction.ItemName }}</td>
+                          <td>{{ prediction.LabourCharge }}</td>
+                          <td>{{ prediction.InsuranceEligibility }}</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+          <div class="modal-footer">
+              <label>Do you want to proceed to insurance</label>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+              <button type="button" class="btn btn-primary" (click)="sendToInsurance()">Yes</button>
+          </div>
       </div>
-      <div class="modal-body">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">ItemName</th>
-              <th scope="col">LabourCharge</th>
-              <th scope="col">Cost To Replace</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Loading spinner -->
-            <div id="loading" *ngIf="loading">Loading...</div>
-            <tr *ngFor="let prediction of predictions">
-              <td>{{ prediction.ItemName }}</td>
-              <td>{{ prediction.LabourCharge }}</td>
-              <td>{{ prediction.InsuranceEligibility }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <label>Do you want to proceed to insurance</label>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary" (click)="sendToInsurance()">Yes</button>
-      </div>
-    </div>
   </div>
 </div>

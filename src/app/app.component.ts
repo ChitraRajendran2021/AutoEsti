@@ -42,6 +42,7 @@ export class AppComponent {
      this.predictionService.predict(this.imageData).subscribe(
         (response) => {
           // Handle the response from the prediction service
+          console.info(response);
          // this.predictions = response;
          this.predictions = [
           { ItemName: 'Bumper', LabourCharge: '$200', InsuranceEligibility: 'Not Required'},
@@ -91,7 +92,7 @@ export class AppComponent {
       reader.onload = (e) => {
         if (e.target?.result) {
           // Convert the image to base64 format
-          this.imageData = e.target.result.toString();
+          this.imageData = e.target.result.toString().split(',')[1];
         }
         this.loading = false; // Hide loading symbol
       };
@@ -102,20 +103,31 @@ export class AppComponent {
   @ViewChild('predictionsModal') predictionsModal!: ElementRef;
 
   sendToInsurance() {
-    // Here you can implement the logic to send the request to the selected insurance provider
-    // For example, you can show a message or send an HTTP request to an API endpoint
-    const message = `Request has been sent to ${this.selectedInsuranceProvider}. You will receive an email at ${this.email}.`;
-    alert(message);
+    // Display the message within the modal
+    const message = `Request has been sent to your insurance company - ${this.selectedInsuranceProvider}. You will receive an email at ${this.email}.`;
+    this.showMessageInModal(message);
 
     // Close the modal after handling the user's choice
-    this.predictionsModal.nativeElement.classList.remove('show');
-    this.predictionsModal.nativeElement.setAttribute('aria-modal', 'false');
-    this.predictionsModal.nativeElement.style.display = 'none';
+}
+
+showMessageInModal(message: string) {
+    // Update the modal body to display the message
+    const modalBody = this.predictionsModal.nativeElement.querySelector('.modal-body');
+    modalBody.innerHTML = `<p>${message}</p>`;
+}
+
+closeModal() {
+    // Close the modal
+    const modal = this.predictionsModal.nativeElement;
+    modal.classList.remove('show');
+    modal.setAttribute('aria-modal', 'false');
+    modal.style.display = 'none';
     document.body.classList.remove('modal-open');
     document.body.style.paddingRight = '0px';
     const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
     if (modalBackdrop) {
-      modalBackdrop.remove();
+        modalBackdrop.remove();
     }
-  }
+}
+
 }
