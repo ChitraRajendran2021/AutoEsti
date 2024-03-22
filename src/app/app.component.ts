@@ -8,14 +8,31 @@ import { PredictionService } from '../services/PredictionService';
 })
 export class AppComponent {
   title = 'GenEsti';
-  description = 'Upload an image to estimate the cost';
+  description = 'An AutoAid EstimateAssistant';
   predictions: any[] = [];
   loading: boolean = false;
+  isEnale: boolean = false;
   imageData: string | ArrayBuffer | null = 'null'; 
+
+    // Properties for user input
+    username: string = '';
+    email: string = '';
+    insuranceProviders: string = '';
+    carBrand: string = '';
+    insuranceProvidersList: string[] = ['State Farm', 'GEICO', 'Progressive', 'Allstate']; // Predefined list of insurance providers
+    selectedInsuranceProvider: string = ''; 
 
   constructor(private predictionService: PredictionService) {}
   predict() {
     this.loading = true;
+        // Prepare user input data
+        const userInput = {
+          username: this.username,
+          email: this.email,
+          insuranceProviders: this.insuranceProviders.split(','), // Convert comma-separated string to an array
+          carBrand: this.carBrand
+        };
+    
     if (!this.imageData) {
       console.error('No image data available.');
       return;
@@ -50,6 +67,7 @@ export class AppComponent {
 
 
   fileChanged(event: any) {
+    this.isEnale = true
     var input = event.target;
     if (input && input.files && input.files[0]) {
       var reader = new FileReader();
