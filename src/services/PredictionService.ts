@@ -21,7 +21,7 @@ export class PredictionService {
   predict(imageData: string | ArrayBuffer): Observable<any> {
     const requestBody = {
       instances: [{
-        content: imageData
+        content: imageData.toString().split(',')[1]
       }],
       parameters: {
         confidenceThreshold: 0.5,
@@ -38,6 +38,6 @@ export class PredictionService {
 
   private getAccessToken(): string {
     // Call gcloud auth print-access-token and return the access token
-    return 'ya29.a0Ad52N3-XiLQwAZxH0TDpH8m4VmpImhkmZVRZx6aoOhxZJJIFNqwMU0aLyLsZkiHghx98qCKL_5ZoENkUmYg6cjGLBZoJe2FwSlOZ9-piQt5NXMUYofoIskjpkvYFf2QxY2qfpVjRcr5Zfm6do3Rbg0XN9zEws5fQGYu4zXvjV69TYLE7mqwI1sx6rsB5niX4kfnqgkoVQ3UWZF4HailMdvDvUsGSyTmdmkGj2DiVQx84Dht2idPAlAnm6iyAy_F1LwnCAQlI2lu56DmdJQBUQaSi8e_H7M9RYm6gIvK5bhP9JAbxqwd3dOQ1UwlF--TFbgXWwQKBx72aDxYaGoI0rTn0ozlfJwW_jYsE7N69-GGVTY4O0q_4hY2LC6LhkpERRtYOYwg_1Oxmo0w9X1zLe35GzTQZF_npaCgYKARgSARESFQHGX2Mi1vF2TK-FVKH8ELr0SuV21Q0423';
+    return 'ya29.a0Ad52N3-8F96Y-aTpaMHMjuC6KhNCapHWWqjiZDiI53tqiDhP62yk6xkJUv_rjYgQpXxnsPPj7PbCKACHk2uS7XXgcD348aNS-8wpl5yq2IeDTMEJ7j-wOdEbK7TsM3CuF8ueeB6zC8_eddIzOiZ3R9W3SYXkQoq_G9i7HjGTcbCKsGnvSZO0DrOR1K_04IU1-82IbxbWXEU-siWuL7SXK4vzeNFAno0axI8YioodbaeqOL3LNX4SF9q_WEKcEpSzUTa52zP_LCcsigAOiN0sSwqQBPQ5zWe4cl0ttc97YgZgt9ewt0Qe1TEshbhi65zu3XaxelZlXbRQK28JPUMGPLfCnYo2yvEgr_t2G-pTypnqO_PgV1MxNbTb8pGAtpOczLGUXqxladhvDw2JPHCF6xsb4mRR3MAhaCgYKAUISARESFQHGX2MiIfJrsBKrvl-ABf05oStbUg0423';
   }
 }

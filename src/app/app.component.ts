@@ -83,7 +83,7 @@ export class AppComponent {
       reader.onload = (e) => {
         if (e.target?.result) {
           // Set the image data
-          this.imageData = e.target.result
+          this.imageData = e.target.result;
         }
         this.loading = false; // Hide loading symbol
       };
