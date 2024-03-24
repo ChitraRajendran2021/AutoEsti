@@ -7,8 +7,8 @@ import { PredictionService } from '../services/PredictionService';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'GenEsti';
-  description = 'An AutoAid EstimateAssistant';
+  title = 'Precision.AI';
+  description = 'Vehicle Repair Estimation By AI';
   predictions: any[] = [];
   loading: boolean = false;
   isEnale: boolean = false;
@@ -49,8 +49,8 @@ export class AppComponent {
        // this.predictions = response;
        console.log(response);
        this.predictions = [
-        { ItemName: 'Bumper', LabourCharge: '$200', InsuranceEligibility: 'Not Required'},
-        { ItemName: 'WindShield', LabourCharge: '$150', InsuranceEligibility: '$500'},
+        { ItemName: 'Right Side Windows', LabourCharge: '$200', InsuranceEligibility: '$500'},
+        { ItemName: 'Right Side Door', LabourCharge: '$150', InsuranceEligibility: '$500'},
         { ItemName: 'Paint', LabourCharge: '$500', InsuranceEligibility: '$1500'}
       ];
         this.loading = false;
