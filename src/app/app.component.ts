@@ -59,8 +59,8 @@ export class AppComponent {
       (error) => {
         // Handle error if any
         this.predictions = [
-          { ItemName: 'Bumper', LabourCharge: '$200', InsuranceEligibility: 'Not Required'},
-          { ItemName: 'WindShield', LabourCharge: '$150', InsuranceEligibility: '$500'},
+          { ItemName: 'Right Side Windows', LabourCharge: '$200', InsuranceEligibility: '$500'},
+          { ItemName: 'Right Side Door', LabourCharge: '$150', InsuranceEligibility: '$500'},
           { ItemName: 'Paint', LabourCharge: '$500', InsuranceEligibility: '$1500'}
         ];
         console.error('Prediction failed:', error);
